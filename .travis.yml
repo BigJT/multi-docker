@@ -1,6 +1,8 @@
 sudo: required
+language: generic
+
 services:
-    - docker:
+    - docker
 
 before install:
     - docker build -t jt10/react-test -f ./client/Dockerfile.dev ./client
@@ -10,16 +12,16 @@ script:
 
 after_success:
     - docker build -t jt10/multi-client ./client
-    # docker build -t jt10/multi-nginx ./nginx
-    # docker build -t jt10/multi-server ./server
-    # docker build -t jt10/multi-worker ./worker
+    - docker build -t jt10/multi-nginx ./nginx
+    - docker build -t jt10/multi-server ./server
+    - docker build -t jt10/multi-worker ./worker
     # Log into docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take images and push to docker hub
     - docker push jt10/multi-client
-    # docker push jt10/multi-nginx
-    # docker push jt10/multi-server
-    # docker push jt10/multi-worker 
+    - docker push jt10/multi-nginx
+    - docker push jt10/multi-server
+    - docker push jt10/multi-worker 
     
     
 
